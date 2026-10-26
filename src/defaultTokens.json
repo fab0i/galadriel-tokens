@@ -1,0 +1,98 @@
+[
+  {
+    "id": "6bb61f34-5d57-4eaa-a02c-f5d08c1ee920",
+    "name": "Beast",
+    "power": 3,
+    "toughness": 3,
+    "typeLine": "Token Creature — Beast",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/6/2/62facbb8-1a83-4731-b515-0f7759ee8c3b.jpg?1783902808"
+  },
+  {
+    "id": "8050907b-4007-4478-8ebd-25b8b2bf85c3",
+    "name": "Cat Beast",
+    "power": 2,
+    "toughness": 2,
+    "typeLine": "Token Creature — Cat Beast",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/3/2/322ef76e-e0f0-48d7-a6ad-5d4c1c9ccb2e.jpg?1783908585"
+  },
+  {
+    "id": "3aaf906a-e749-4e86-ac79-97650b92f271",
+    "name": "Eldrazi Spawn",
+    "power": 0,
+    "toughness": 1,
+    "typeLine": "Token Creature — Eldrazi Spawn",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/e/3/e32795e1-5548-43ef-8cd6-c605a19ef708.jpg?1783911106"
+  },
+  {
+    "id": "dac8a765-6845-4b57-bb79-4ec463436f92",
+    "name": "Elf Warrior",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Creature — Elf Warrior",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/1/1/118d0655-5719-4512-8bc1-fe759669811b.jpg?1783928078"
+  },
+  {
+    "id": "142c04da-7739-4e43-954b-3cd9b462f6bb",
+    "name": "Gnome",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Artifact Creature — Gnome",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/6/d/6def709a-53b3-4520-9544-74ab6472d256.jpg?1783913604"
+  },
+  {
+    "id": "c39cd31f-c4a2-4ca8-b4f9-b2e6289743bc",
+    "name": "Insect",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Creature — Insect",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/e/5/e5aa36ec-5f3a-405d-9a65-5a56a44dcee3.jpg?1783902801"
+  },
+  {
+    "id": "750266b3-412e-443c-892d-ce60ad919d74",
+    "name": "Knight",
+    "power": 2,
+    "toughness": 2,
+    "typeLine": "Token Creature — Knight",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/5/0/50633bba-9402-4d8c-a277-c370f25bd01f.jpg?1783922325"
+  },
+  {
+    "id": "3e8443aa-7c50-4776-8e8c-eea82c7da0f1",
+    "name": "Koma's Coil",
+    "power": 3,
+    "toughness": 3,
+    "typeLine": "Token Creature — Serpent",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/3/7/370a7b71-3e7f-4354-ab19-09c710369851.jpg?1783912618"
+  },
+  {
+    "id": "2b7dba01-b08c-4218-9fc1-da55559d9155",
+    "name": "Saproling",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Creature — Saproling",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/2/4/248ade83-ac57-42d6-985c-1e4cc3639f36.jpg?1783903570"
+  },
+  {
+    "id": "67f21c0c-2083-4eda-9dc3-cc8aee42289f",
+    "name": "Squirrel",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Creature — Squirrel",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/f/d/fd0474f3-682d-4c6d-b902-84f3250aa269.jpg?1783902800"
+  },
+  {
+    "id": "97af46cb-6209-4ae7-81cc-792894999937",
+    "name": "Vampire",
+    "power": 1,
+    "toughness": 1,
+    "typeLine": "Token Creature — Vampire",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/0/4/0484390e-1167-4407-84de-7ddc726e8926.jpg?1783913608"
+  },
+  {
+    "id": "8bf1137a-163c-446f-8d34-168a7705df4e",
+    "name": "Zombie Army",
+    "power": 0,
+    "toughness": 0,
+    "typeLine": "Token Creature — Zombie Army",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/1/2/12742d1f-eb2e-4262-88e2-403c9ae6c431.jpg?1783933351"
+  }
+]
