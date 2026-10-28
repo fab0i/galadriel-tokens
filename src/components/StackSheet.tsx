@@ -20,7 +20,7 @@ interface Props {
 export function StackSheet({ stack, token, onClose }: Props) {
   const apply = useStore((s) => s.apply);
   const counterAmount = useStore((s) => s.modifiers.counterAmount);
-  const [n, setN] = useState(stack.count);
+  const [n, setN] = useState(1);
   const [amount, setAmount] = useState(counterAmount);
   const key = stackKey(stack);
 
