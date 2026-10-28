@@ -338,10 +338,46 @@ button.full {
   min-height: 44px;
 }
 
+.amount-group {
+  flex: 1;
+  display: flex;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.amount-group > .secondary {
+  min-width: 48px;
+  min-height: 60px;
+  padding: 0;
+  font-size: 1.3rem;
+}
+
 .action-bar .big {
   flex: 1;
   font-size: 1.3rem;
   min-height: 60px;
+}
+
+.enter-bar {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.enter-bar .stepper {
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.enter-bar .stepper-label {
+  font-size: 1rem;
+}
+
+.enter-bar .stepper-value {
+  min-width: 5rem;
 }
 
 .action-bar .small {
@@ -544,6 +580,19 @@ button.combat {
 .stepper-controls input::-webkit-inner-spin-button,
 .stepper-controls input::-webkit-outer-spin-button {
   -webkit-appearance: none;
+}
+
+.stepper-value {
+  flex: 1;
+  min-width: 4.5rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .text-input {

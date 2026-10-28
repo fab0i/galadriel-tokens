@@ -21,7 +21,12 @@ export interface Stack extends StackState {
 }
 
 export interface Settings {
+  wakeLock: boolean;
+  showEnterCounters: boolean;
+}
+
+// Per-game effects (e.g. Hardened Scales) that reset on a new game.
+export interface Modifiers {
   enterCounters: number;
   counterAmount: number;
-  wakeLock: boolean;
 }

@@ -11,7 +11,7 @@ interface Props {
 
 export function EnterDialog({ token, onClose }: Props) {
   const createToken = useStore((s) => s.createToken);
-  const enterCounters = useStore((s) => s.settings.enterCounters);
+  const enterCounters = useStore((s) => s.modifiers.enterCounters);
   const [power, setPower] = useState(token.power);
   const [toughness, setToughness] = useState(token.toughness);
   const [counters, setCounters] = useState(enterCounters);

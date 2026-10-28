@@ -8,6 +8,7 @@ import {
 } from "./board.ts";
 import { AddTokenDialog } from "./components/AddTokenDialog.tsx";
 import { CombatView } from "./components/CombatView.tsx";
+import { EnterCountersBar } from "./components/EnterCountersBar.tsx";
 import { EnterDialog } from "./components/EnterDialog.tsx";
 import { GearIcon, RedoIcon, UndoIcon } from "./components/icons.tsx";
 import { SettingsDialog } from "./components/SettingsDialog.tsx";
@@ -31,7 +32,9 @@ export default function App() {
     future,
     catalog,
     settings,
+    modifiers,
     apply,
+    updateModifiers,
     setCombat,
     undo,
     redo,
@@ -42,7 +45,9 @@ export default function App() {
   useWakeLock(settings.wakeLock);
 
   const tokenIds = [...new Set(board.map((s) => s.tokenId))];
-  const amount = settings.counterAmount;
+  const amount = modifiers.counterAmount;
+  const setAmount = (counterAmount: number) =>
+    updateModifiers({ counterAmount });
 
   return (
     <div className="app">
@@ -112,6 +117,10 @@ export default function App() {
             )}
           </main>
 
+          {(settings.showEnterCounters || modifiers.enterCounters !== 0) && (
+            <EnterCountersBar />
+          )}
+
           <footer className="action-bar">
             <button
               className="secondary"
@@ -134,13 +143,30 @@ export default function App() {
             >
               Proliferate
             </button>
-            <button
-              className="primary big"
-              disabled={!board.length}
-              onClick={() => apply((b) => addCountersToAll(b, amount))}
-            >
-              +{amount}/+{amount} all
-            </button>
+            <div className="amount-group">
+              <button
+                className="secondary"
+                aria-label="Decrease counters placed"
+                disabled={amount <= 1}
+                onClick={() => setAmount(amount - 1)}
+              >
+                −
+              </button>
+              <button
+                className="primary big"
+                disabled={!board.length}
+                onClick={() => apply((b) => addCountersToAll(b, amount))}
+              >
+                +{amount}/+{amount} all
+              </button>
+              <button
+                className="secondary"
+                aria-label="Increase counters placed"
+                onClick={() => setAmount(amount + 1)}
+              >
+                +
+              </button>
+            </div>
           </footer>
         </>
       )}

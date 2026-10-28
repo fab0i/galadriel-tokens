@@ -7,6 +7,7 @@ import {
 } from "../board.ts";
 import { useStore } from "../store.ts";
 import type { Stack, TokenDef } from "../types.ts";
+import { CounterStepper } from "./CounterStepper.tsx";
 import { Modal } from "./Modal.tsx";
 import { Stepper } from "./Stepper.tsx";
 
@@ -18,7 +19,7 @@ interface Props {
 
 export function StackSheet({ stack, token, onClose }: Props) {
   const apply = useStore((s) => s.apply);
-  const counterAmount = useStore((s) => s.settings.counterAmount);
+  const counterAmount = useStore((s) => s.modifiers.counterAmount);
   const [n, setN] = useState(stack.count);
   const [amount, setAmount] = useState(counterAmount);
   const key = stackKey(stack);
@@ -68,7 +69,7 @@ export function StackSheet({ stack, token, onClose }: Props) {
           {stack.tapped ? "Untap" : "Tap"} {n}
         </button>
         <div className="row-inline">
-          <Stepper
+          <CounterStepper
             label="Counters each"
             value={amount}
             onChange={setAmount}
