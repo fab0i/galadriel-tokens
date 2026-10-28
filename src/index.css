@@ -185,6 +185,10 @@ button.full {
 .token-card-title {
   flex: 1;
   min-width: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  align-self: stretch;
 }
 
 .token-card-title h3 {
@@ -260,10 +264,10 @@ button.full {
 }
 
 .badge {
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   border-radius: 999px;
   background: var(--surface-2);
   color: var(--muted);

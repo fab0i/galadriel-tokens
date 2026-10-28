@@ -98,8 +98,16 @@ export function canAttack(s: StackState): boolean {
   return !s.tapped && !s.sick;
 }
 
-export function attackPower(s: StackState): number {
-  return Math.max(0, s.power + s.counters);
+export function stackPower(s: StackState, bonus = 0): number {
+  return s.power + s.counters + bonus;
+}
+
+export function stackToughness(s: StackState, bonus = 0): number {
+  return s.toughness + s.counters + bonus;
+}
+
+export function attackPower(s: StackState, bonus = 0): number {
+  return Math.max(0, stackPower(s, bonus));
 }
 
 export function tapAttackers(

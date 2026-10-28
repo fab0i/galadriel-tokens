@@ -6,7 +6,11 @@ import type { Modifiers, Settings, TokenDef } from "./types.ts";
 
 const UNDO_LIMIT = 50;
 
-const DEFAULT_MODIFIERS: Modifiers = { enterCounters: 0, counterAmount: 1 };
+const DEFAULT_MODIFIERS: Modifiers = {
+  enterCounters: 0,
+  counterAmount: 1,
+  typeBonuses: {},
+};
 
 export interface EnteringStats {
   power: number;
@@ -55,6 +59,7 @@ interface State {
   resetLibrary: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
   updateModifiers: (patch: Partial<Modifiers>) => void;
+  setTypeBonus: (tokenId: string, bonus: number) => void;
 }
 
 function sortByName(tokens: TokenDef[]): TokenDef[] {
@@ -148,11 +153,18 @@ export const useStore = create<State>()(
           set(({ settings }) => ({ settings: { ...settings, ...patch } })),
         updateModifiers: (patch) =>
           commit({ modifiers: { ...get().modifiers, ...patch } }),
+        setTypeBonus: (tokenId, bonus) => {
+          const { typeBonuses } = get().modifiers;
+          if ((typeBonuses[tokenId] ?? 0) === bonus) return;
+          const next = { ...typeBonuses, [tokenId]: bonus };
+          if (bonus === 0) delete next[tokenId];
+          get().updateModifiers({ typeBonuses: next });
+        },
       };
     },
     {
       name: "galadriel-tokens",
-      version: 5,
+      version: 6,
       migrate: (persisted, version) => {
         const old = persisted as {
           past?: unknown[];
@@ -164,9 +176,19 @@ export const useStore = create<State>()(
         // v3 and earlier kept the modifiers inside settings.
         const { enterCounters, counterAmount, ...settings } =
           old.settings ?? {};
-        const modifiers = old.modifiers ?? {
-          enterCounters: enterCounters ?? DEFAULT_MODIFIERS.enterCounters,
-          counterAmount: counterAmount ?? DEFAULT_MODIFIERS.counterAmount,
+        const modifiers = {
+          ...DEFAULT_MODIFIERS,
+          ...(old.modifiers ?? {
+            enterCounters: enterCounters ?? DEFAULT_MODIFIERS.enterCounters,
+            counterAmount: counterAmount ?? DEFAULT_MODIFIERS.counterAmount,
+          }),
+        };
+        const withDefaults = (entry: unknown) => {
+          const snapshot = entry as { modifiers?: Partial<Modifiers> };
+          return {
+            ...snapshot,
+            modifiers: { ...DEFAULT_MODIFIERS, ...snapshot.modifiers },
+          };
         };
         // v1 history held bare boards; v2 combat was a bare targets array.
         const upgradeCombat = (c: unknown) =>
@@ -183,8 +205,8 @@ export const useStore = create<State>()(
           ...old,
           settings,
           modifiers,
-          past: (old.past ?? []).map(upgradeSnapshot),
-          future: (old.future ?? []).map(upgradeSnapshot),
+          past: (old.past ?? []).map(upgradeSnapshot).map(withDefaults),
+          future: (old.future ?? []).map(upgradeSnapshot).map(withDefaults),
           combat: upgradeCombat(old.combat ?? null),
         } as unknown as State;
       },

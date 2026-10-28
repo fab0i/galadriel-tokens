@@ -14,6 +14,7 @@ import { GearIcon, RedoIcon, UndoIcon } from "./components/icons.tsx";
 import { SettingsDialog } from "./components/SettingsDialog.tsx";
 import { StackSheet } from "./components/StackSheet.tsx";
 import { TokenCard } from "./components/TokenCard.tsx";
+import { TypeBonusDialog } from "./components/TypeBonusDialog.tsx";
 import { useWakeLock } from "./hooks.ts";
 import { newCombat, useStore } from "./store.ts";
 import type { Stack, TokenDef } from "./types.ts";
@@ -22,7 +23,8 @@ type Dialog =
   | { kind: "add" }
   | { kind: "settings" }
   | { kind: "stack"; stack: Stack }
-  | { kind: "enter"; token: TokenDef };
+  | { kind: "enter"; token: TokenDef }
+  | { kind: "bonus"; token: TokenDef };
 
 export default function App() {
   const {
@@ -112,6 +114,7 @@ export default function App() {
                   stacks={board.filter((s) => s.tokenId === id)}
                   onOpenStack={(stack) => setDialog({ kind: "stack", stack })}
                   onCustomEnter={(token) => setDialog({ kind: "enter", token })}
+                  onOpenBonus={(token) => setDialog({ kind: "bonus", token })}
                 />
               ))
             )}
@@ -179,6 +182,9 @@ export default function App() {
           token={catalog[dialog.stack.tokenId]}
           onClose={close}
         />
+      )}
+      {dialog?.kind === "bonus" && (
+        <TypeBonusDialog token={dialog.token} onClose={close} />
       )}
       {dialog?.kind === "enter" && (
         <EnterDialog token={dialog.token} onClose={close} />

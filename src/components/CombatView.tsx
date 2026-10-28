@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { attackPower, canAttack, compareStacks, stackKey } from "../board.ts";
+import {
+  attackPower,
+  canAttack,
+  compareStacks,
+  stackKey,
+  stackPower,
+  stackToughness,
+} from "../board.ts";
 import { type Combat, newCombat, useStore } from "../store.ts";
 import type { Stack } from "../types.ts";
 import { TokenArt } from "./TokenArt.tsx";
 
 export function CombatView() {
-  const { board, catalog, combat, setCombat, finishCombat } = useStore();
+  const { board, catalog, combat, modifiers, setCombat, finishCombat } =
+    useStore();
+  const bonusOf = (s: Stack) => modifiers.typeBonuses[s.tokenId] ?? 0;
   // Untouched stacks stay home, including ones created mid-combat.
   const current = combat ?? newCombat();
   const { targets, dead } = current;
@@ -50,13 +59,13 @@ export function CombatView() {
 
   const attackerCount = eligible.reduce((sum, s) => sum + sentTotal(s), 0);
   const totalPower = eligible.reduce(
-    (sum, s) => sum + sentTotal(s) * attackPower(s),
+    (sum, s) => sum + sentTotal(s) * attackPower(s, bonusOf(s)),
     0,
   );
   const targetStats = targets.map((_, t) => ({
     count: eligible.reduce((sum, s) => sum + assignedTo(t, s), 0),
     power: eligible.reduce(
-      (sum, s) => sum + assignedTo(t, s) * attackPower(s),
+      (sum, s) => sum + assignedTo(t, s) * attackPower(s, bonusOf(s)),
       0,
     ),
   }));
@@ -126,7 +135,7 @@ export function CombatView() {
             .sort(compareStacks);
           const count = stacks.reduce((sum, s) => sum + sentTotal(s), 0);
           const power = stacks.reduce(
-            (sum, s) => sum + sentTotal(s) * attackPower(s),
+            (sum, s) => sum + sentTotal(s) * attackPower(s, bonusOf(s)),
             0,
           );
           const dying = stacks.reduce((sum, s) => sum + deadOf(s), 0);
@@ -148,6 +157,7 @@ export function CombatView() {
                   <CombatRow
                     key={stackKey(stack)}
                     stack={stack}
+                    bonus={bonusOf(stack)}
                     mode={casualties ? "casualties" : "attack"}
                     value={casualties ? deadOf(stack) : attackers(stack)}
                     max={casualties ? sentTotal(stack) : available(stack)}
@@ -258,6 +268,7 @@ export function CombatView() {
 
 interface RowProps {
   stack: Stack;
+  bonus: number;
   mode: "attack" | "casualties";
   value: number;
   max: number;
@@ -265,11 +276,19 @@ interface RowProps {
   onChange: (n: number) => void;
 }
 
-function CombatRow({ stack, mode, value, max, elsewhere, onChange }: RowProps) {
+function CombatRow({
+  stack,
+  bonus,
+  mode,
+  value,
+  max,
+  elsewhere,
+  onChange,
+}: RowProps) {
   const casualties = mode === "casualties";
   const pt = (
     <span className="stack-pt">
-      {stack.power + stack.counters}/{stack.toughness + stack.counters}
+      {stackPower(stack, bonus)}/{stackToughness(stack, bonus)}
     </span>
   );
 

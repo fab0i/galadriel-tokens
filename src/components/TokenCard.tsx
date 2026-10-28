@@ -1,7 +1,13 @@
-import { compareStacks, stackKey } from "../board.ts";
+import {
+  compareStacks,
+  stackKey,
+  stackPower,
+  stackToughness,
+} from "../board.ts";
 import { useLongPress } from "../hooks.ts";
 import { useStore } from "../store.ts";
 import type { Stack, TokenDef } from "../types.ts";
+import { formatCounters } from "./CounterStepper.tsx";
 import { TokenArt } from "./TokenArt.tsx";
 
 interface Props {
@@ -9,6 +15,7 @@ interface Props {
   stacks: Stack[];
   onOpenStack: (stack: Stack) => void;
   onCustomEnter: (token: TokenDef) => void;
+  onOpenBonus: (token: TokenDef) => void;
 }
 
 export function TokenCard({
@@ -16,8 +23,10 @@ export function TokenCard({
   stacks,
   onOpenStack,
   onCustomEnter,
+  onOpenBonus,
 }: Props) {
   const createToken = useStore((s) => s.createToken);
+  const bonus = useStore((s) => s.modifiers.typeBonuses[token.id] ?? 0);
   const addPress = useLongPress(
     () => createToken(token),
     () => onCustomEnter(token),
@@ -28,12 +37,17 @@ export function TokenCard({
     <article className="token-card">
       <header className="token-card-header">
         <TokenArt token={token} />
-        <div className="token-card-title">
+        <button
+          className="token-card-title"
+          aria-label={`Bonus for all ${token.name} tokens`}
+          onClick={() => onOpenBonus(token)}
+        >
           <h3>{token.name}</h3>
           <span>
-            {token.power}/{token.toughness} · {total} on board
+            {token.power}/{token.toughness}
+            {bonus !== 0 && ` ${formatCounters(bonus)}`} · {total} on board
           </span>
-        </div>
+        </button>
         <button
           className="add-one"
           aria-label={`Create another ${token.name}`}
@@ -51,8 +65,7 @@ export function TokenCard({
             >
               <span className="stack-count">×{stack.count}</span>
               <span className="stack-pt">
-                {stack.power + stack.counters}/
-                {stack.toughness + stack.counters}
+                {stackPower(stack, bonus)}/{stackToughness(stack, bonus)}
               </span>
               {stack.counters > 0 && (
                 <span className="stack-counters">+{stack.counters}</span>

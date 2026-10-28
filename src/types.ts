@@ -29,4 +29,6 @@ export interface Settings {
 export interface Modifiers {
   enterCounters: number;
   counterAmount: number;
+  // Continuous +X/+X per token id (e.g. "Saprolings get +2/+2"). Unlike counters, proliferate ignores it.
+  typeBonuses: Record<string, number>;
 }

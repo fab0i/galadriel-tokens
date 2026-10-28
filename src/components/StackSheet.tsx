@@ -4,6 +4,8 @@ import {
   removeFromStack,
   setTapped,
   stackKey,
+  stackPower,
+  stackToughness,
 } from "../board.ts";
 import { useStore } from "../store.ts";
 import type { Stack, TokenDef } from "../types.ts";
@@ -20,6 +22,7 @@ interface Props {
 export function StackSheet({ stack, token, onClose }: Props) {
   const apply = useStore((s) => s.apply);
   const counterAmount = useStore((s) => s.modifiers.counterAmount);
+  const bonus = useStore((s) => s.modifiers.typeBonuses[token.id] ?? 0);
   const [n, setN] = useState(1);
   const [amount, setAmount] = useState(counterAmount);
   const key = stackKey(stack);
@@ -29,7 +32,7 @@ export function StackSheet({ stack, token, onClose }: Props) {
     onClose();
   };
 
-  const pt = `${stack.power + stack.counters}/${stack.toughness + stack.counters}`;
+  const pt = `${stackPower(stack, bonus)}/${stackToughness(stack, bonus)}`;
   const state = [stack.tapped ? "tapped" : "untapped", stack.sick && "sick"]
     .filter(Boolean)
     .join(", ");
