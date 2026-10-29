@@ -812,3 +812,76 @@ textarea.text-input {
   -webkit-user-select: text;
   user-select: text;
 }
+
+@media (max-width: 720px) {
+  .action-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .action-bar > button {
+    min-width: 0;
+    padding-inline: 0.25rem;
+  }
+
+  .action-bar > .amount-group {
+    grid-column: 1 / -1;
+  }
+
+  .combat-dock .action-bar {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .combat-dock .action-bar > .primary {
+    grid-column: 3 / 5;
+    grid-row: 1;
+  }
+
+  .targets-bar {
+    padding-inline: 0.75rem;
+  }
+
+  .target-tab {
+    min-width: max-content;
+  }
+
+  .overlay {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .combat-total {
+    grid-column: span 2;
+  }
+
+  .combat-total span {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0.75rem;
+  }
+
+  .top-bar {
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .top-bar-actions {
+    gap: 0.25rem;
+  }
+
+  .top-bar-actions button.token {
+    white-space: nowrap;
+    padding-inline: 0.8rem;
+  }
+
+  .combat-dock .action-bar > .secondary {
+    font-size: 0.85rem;
+  }
+}
