@@ -52,11 +52,11 @@ export default function App() {
     updateModifiers({ counterAmount });
 
   return (
-    <div className="app">
+    <div className={`app ${inCombat ? "in-combat" : ""}`}>
       <header className="top-bar">
         <h1>
-          {inCombat ? "Combat" : "Tokens"}{" "}
-          <span className="muted">{totalCount(board)}</span>
+          <span>{inCombat ? "Combat" : "Tokens"}</span>
+          <strong>{totalCount(board)}</strong>
         </h1>
         <div className="top-bar-actions">
           <button
@@ -75,10 +75,7 @@ export default function App() {
           >
             <RedoIcon />
           </button>
-          <button
-            className="primary"
-            onClick={() => setDialog({ kind: "add" })}
-          >
+          <button className="token" onClick={() => setDialog({ kind: "add" })}>
             + Token
           </button>
           <button
@@ -100,7 +97,7 @@ export default function App() {
               <div className="empty">
                 <p>No tokens on the board.</p>
                 <button
-                  className="primary"
+                  className="token"
                   onClick={() => setDialog({ kind: "add" })}
                 >
                   + Token
@@ -133,7 +130,7 @@ export default function App() {
               Start my turn
             </button>
             <button
-              className="secondary combat"
+              className="secondary"
               disabled={!board.some(canAttack)}
               onClick={() => setCombat(newCombat())}
             >
@@ -156,7 +153,7 @@ export default function App() {
                 −
               </button>
               <button
-                className="primary big"
+                className="counter big"
                 disabled={!board.length}
                 onClick={() => apply((b) => addCountersToAll(b, amount))}
               >

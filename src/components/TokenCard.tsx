@@ -65,14 +65,16 @@ export function TokenCard({
             >
               <span className="stack-count">×{stack.count}</span>
               <span className="stack-pt">
-                {stackPower(stack, bonus)}/{stackToughness(stack, bonus)}
+                {stackPower(stack, bonus)}
+                <i>/</i>
+                {stackToughness(stack, bonus)}
               </span>
               {stack.counters > 0 && (
                 <span className="stack-counters">+{stack.counters}</span>
               )}
               <span className="stack-badges">
-                {stack.tapped && <span className="badge">Tapped</span>}
                 {stack.sick && <span className="badge sick">Sick</span>}
+                {stack.tapped && <span className="badge">Tapped</span>}
               </span>
             </button>
           </li>

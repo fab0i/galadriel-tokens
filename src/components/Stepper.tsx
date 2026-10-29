@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 
 export interface StepperProps {
   label: string;
@@ -20,11 +20,14 @@ export function Stepper({
   leading,
   display,
 }: StepperProps) {
+  const inputId = useId();
   const set = (next: number) => onChange(Math.min(max, Math.max(min, next)));
 
   return (
-    <label className="stepper">
-      <span className="stepper-label">{label}</span>
+    <div className="stepper">
+      <label className="stepper-label" htmlFor={display ? undefined : inputId}>
+        {label}
+      </label>
       <span className="stepper-controls">
         {leading}
         <button
@@ -39,6 +42,7 @@ export function Stepper({
           <output className="stepper-value">{display(value)}</output>
         ) : (
           <input
+            id={inputId}
             type="number"
             inputMode="numeric"
             value={value}
@@ -58,6 +62,6 @@ export function Stepper({
           +
         </button>
       </span>
-    </label>
+    </div>
   );
 }

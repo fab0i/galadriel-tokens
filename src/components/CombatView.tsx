@@ -305,8 +305,8 @@ function CombatRow({
           <span className="stack-count">×{stack.count}</span>
           {pt}
           <span className="stack-badges">
-            {stack.tapped && <span className="badge">Tapped</span>}
             {stack.sick && <span className="badge sick">Sick</span>}
+            {stack.tapped && <span className="badge">Tapped</span>}
             {elsewhereBadges}
           </span>
         </div>

@@ -7,6 +7,7 @@ import {
   canAttack,
   proliferate,
   removeFromStack,
+  removeToken,
   resolveCombat,
   setTapped,
   stackKey,
@@ -98,5 +99,14 @@ describe("board", () => {
     const board = squirrels(2);
     expect(totalCount(removeFromStack(board, stackKey(board[0]), 1))).toBe(1);
     expect(removeFromStack(board, stackKey(board[0]), 2)).toEqual([]);
+  });
+
+  it("removes every stack of one token type", () => {
+    const other = { ...squirrel, tokenId: "elf" };
+    const board = addToken(addCountersToAll(squirrels(2), 1), other);
+    const rest = addToken(addToken(board, squirrel), squirrel);
+    expect(removeToken(rest, "squirrel").map((s) => s.tokenId)).toEqual([
+      "elf",
+    ]);
   });
 });

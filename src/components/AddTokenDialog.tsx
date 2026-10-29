@@ -206,7 +206,7 @@ export function AddTokenDialog({ onClose }: { onClose: () => void }) {
             onChange={setCustomToughness}
             min={0}
           />
-          <button className="primary full" disabled={!customName.trim()}>
+          <button className="token full" disabled={!customName.trim()}>
             Create {customPower}/{customToughness} {customName.trim()}
           </button>
         </form>

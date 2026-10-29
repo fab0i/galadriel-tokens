@@ -155,6 +155,10 @@ export function removeFromStack(board: Board, key: string, n: number): Board {
   );
 }
 
+export function removeToken(board: Board, tokenId: string): Board {
+  return board.filter((s) => s.tokenId !== tokenId);
+}
+
 export function totalCount(board: Board): number {
   return board.reduce((sum, s) => sum + s.count, 0);
 }

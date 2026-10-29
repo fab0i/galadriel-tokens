@@ -9,7 +9,7 @@ import {
 } from "../board.ts";
 import { useStore } from "../store.ts";
 import type { Stack, TokenDef } from "../types.ts";
-import { CounterStepper } from "./CounterStepper.tsx";
+import { formatCounters } from "./CounterStepper.tsx";
 import { Modal } from "./Modal.tsx";
 import { Stepper } from "./Stepper.tsx";
 
@@ -33,65 +33,86 @@ export function StackSheet({ stack, token, onClose }: Props) {
   };
 
   const pt = `${stackPower(stack, bonus)}/${stackToughness(stack, bonus)}`;
-  const state = [stack.tapped ? "tapped" : "untapped", stack.sick && "sick"]
+  const state = [stack.tapped ? "Tapped" : "Untapped", stack.sick && "Sick"]
     .filter(Boolean)
     .join(", ");
 
   return (
     <Modal title={`${stack.count} × ${pt} ${token.name}`} onClose={onClose}>
-      <p className="muted">{state}</p>
-      {stack.count > 1 && (
-        <div className="row-inline">
-          <Stepper
-            label="How many"
-            value={n}
-            onChange={setN}
-            min={1}
-            max={stack.count}
-            leading={
-              <button
-                type="button"
-                className="secondary"
-                aria-label="One"
-                onClick={() => setN(1)}
-              >
-                One
-              </button>
-            }
-          />
-          <button className="secondary" onClick={() => setN(stack.count)}>
-            All
-          </button>
+      <div className="sheet-section">
+        <p className="muted">{state}</p>
+        {stack.count > 1 && (
+          <div className="row-inline">
+            <Stepper
+              label="How many"
+              value={n}
+              onChange={setN}
+              min={1}
+              max={stack.count}
+              leading={
+                <button
+                  type="button"
+                  className="secondary"
+                  aria-label="One"
+                  onClick={() => setN(1)}
+                >
+                  One
+                </button>
+              }
+            />
+            <button className="secondary" onClick={() => setN(stack.count)}>
+              All
+            </button>
+          </div>
+        )}
+      </div>
+      <div className="sheet-section sheet-actions">
+        {stack.count > 1 && (
+          <p className="muted">
+            Apply to {n} of {stack.count}
+          </p>
+        )}
+        <div className="stepper">
+          <span className="stepper-label">Add or remove counters</span>
+          <div className="amount-group">
+            <button
+              className="secondary"
+              aria-label="Decrease counters each"
+              disabled={amount <= -stack.counters}
+              onClick={() => setAmount(amount - 1)}
+            >
+              −
+            </button>
+            <button
+              className={amount < 0 ? "counter negative" : "counter"}
+              disabled={amount === 0}
+              onClick={() => run((b) => addCountersToStack(b, key, n, amount))}
+            >
+              {formatCounters(amount)} on {n}
+            </button>
+            <button
+              className="secondary"
+              aria-label="Increase counters each"
+              onClick={() => setAmount(amount + 1)}
+            >
+              +
+            </button>
+          </div>
         </div>
-      )}
-      <div className="sheet-actions">
-        <button
-          className="primary"
-          onClick={() => run((b) => setTapped(b, key, n, !stack.tapped))}
-        >
-          {stack.tapped ? "Untap" : "Tap"} {n}
-        </button>
-        <div className="row-inline">
-          <CounterStepper
-            label="Counters each"
-            value={amount}
-            onChange={setAmount}
-            min={-stack.counters}
-          />
+        <div className="sheet-pair">
           <button
-            className="secondary"
-            disabled={amount === 0}
-            onClick={() => run((b) => addCountersToStack(b, key, n, amount))}
+            className="danger"
+            onClick={() => run((b) => removeFromStack(b, key, n))}
           >
-            {amount >= 0 ? `+${amount}` : amount} on {n}
+            Remove {n}
+          </button>
+          <button
+            className="primary"
+            onClick={() => run((b) => setTapped(b, key, n, !stack.tapped))}
+          >
+            {stack.tapped ? "Untap" : "Tap"} {n}
           </button>
         </div>
-        <button
-          className="danger"
-          onClick={() => run((b) => removeFromStack(b, key, n))}
-        >
-          Remove {n}
-        </button>
       </div>
     </Modal>
   );

@@ -32,7 +32,7 @@ export function EnterDialog({ token, onClose }: Props) {
         min={0}
       />
       <button
-        className="primary full"
+        className="token full"
         onClick={() => {
           createToken(token, { power, toughness, counters });
           onClose();
