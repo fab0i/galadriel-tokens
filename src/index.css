@@ -356,6 +356,7 @@ button.full {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--muted);
 }
 
@@ -475,6 +476,7 @@ button.full {
 
 .combat-row {
   display: flex;
+  align-items: center;
   gap: 0.35rem;
   min-width: 0;
 }
@@ -482,8 +484,12 @@ button.full {
 .combat-row .stack-row {
   flex: 1;
   min-width: 0;
-  gap: 0.5rem;
-  padding: 0.5rem 0.6rem;
+  align-self: stretch;
+}
+
+.combat-row .combat-step {
+  width: 44px;
+  min-height: 44px;
 }
 
 .stack-row.attacking {
@@ -512,10 +518,8 @@ button.full {
   color: var(--combat-soft);
 }
 
-.combat-row .badge {
-  white-space: nowrap;
-  font-size: 0.85rem;
-  text-transform: none;
+.combat-value-stepper {
+  padding-right: 0.5rem;
 }
 
 .combat-step {

@@ -288,7 +288,9 @@ function CombatRow({
   const casualties = mode === "casualties";
   const pt = (
     <span className="stack-pt">
-      {stackPower(stack, bonus)}/{stackToughness(stack, bonus)}
+      {stackPower(stack, bonus)}
+      <i>/</i>
+      {stackToughness(stack, bonus)}
     </span>
   );
 
@@ -341,22 +343,24 @@ function CombatRow({
           {elsewhereBadges}
         </span>
       </button>
-      <button
-        className="combat-step"
-        disabled={!value}
-        onClick={() => onChange(value - 1)}
-        aria-label={`One fewer ${subject}`}
-      >
-        −
-      </button>
-      <button
-        className="combat-step"
-        disabled={value === max}
-        onClick={() => onChange(value + 1)}
-        aria-label={`One more ${subject}`}
-      >
-        +
-      </button>
+      <div className="combat-value-stepper">
+        <button
+          className="combat-step"
+          disabled={!value}
+          onClick={() => onChange(value - 1)}
+          aria-label={`One fewer ${subject}`}
+        >
+          −
+        </button>
+        <button
+          className="combat-step"
+          disabled={value === max}
+          onClick={() => onChange(value + 1)}
+          aria-label={`One more ${subject}`}
+        >
+          +
+        </button>
+      </div>
     </li>
   );
 }
