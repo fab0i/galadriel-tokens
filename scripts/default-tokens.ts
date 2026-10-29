@@ -3,7 +3,7 @@ import { creatureTokensForDeck, parseDecklist } from "../src/scryfall.ts";
 
 const deckPath = process.argv[2];
 if (!deckPath) {
-  console.error("Usage: npm run default-tokens -- <decklist.txt>");
+  console.error("Usage: pnpm default-tokens <decklist.txt>");
   process.exit(1);
 }
 

@@ -11,6 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
+    "pages:deploy": "pnpm build && wrangler pages deploy",
+    "pages:deploy:preview": "pnpm build && wrangler pages deploy --branch preview",
     "test": "vitest run",
     "default-tokens": "node scripts/default-tokens.ts",
     "generate-icons": "pwa-assets-generator --preset minimal-2023 public/icon.svg"
@@ -32,6 +34,7 @@
     "typescript": "~6.0.3",
     "vite": "^8.3.4",
     "vite-plugin-pwa": "^2.0.0",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "wrangler": "^4.154.0"
   }
 }
